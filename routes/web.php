@@ -4,6 +4,9 @@
     use App\Http\Controllers\ProfileController;
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\Auth\RegisteredUserController;
+    use App\Http\Controllers\DepositoController;
+    use App\Http\Controllers\KreditController;
+    use App\Http\Controllers\RekeningController;
 
     Route::get('/', function () {
         return view('welcome');
@@ -27,6 +30,19 @@
         //route untuk nasabah
         Route::get('/nasabah/create', [NasabahController::class, 'create'])->name('nasabah.create');
         Route::post('/nasabah',       [NasabahController::class, 'store'])->name('nasabah.store');
+        Route::resource('nasabah', NasabahController::class)->only(['update','show','edit']);
+
+        Route::middleware('can:submit-applications')->group(function () {
+        // Rekening
+            Route::get('/rekening/create', [RekeningController::class, 'create'])->name('rekening.create');
+            Route::post('/rekening',       [RekeningController::class, 'store'])->name('rekening.store');
+
+            Route::get('/kredit/create', [KreditController::class, 'create'])->name('kredit.create');
+            Route::post('/kredit/store', [KreditController::class, 'store'])->name('kredit.store');
+
+            Route::get('/deposito/create', [DepositoController::class, 'create'])->name('deposito.create');
+            Route::post('/deposito',       [DepositoController::class, 'store'])->name('deposito.store');
+        });
     });
 
     // Guest auth (custom tambahan di luar auth.php)
