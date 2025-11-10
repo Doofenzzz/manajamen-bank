@@ -235,6 +235,10 @@
                 <li>
                   <hr class="dropdown-divider">
                 </li>
+                <li><a class="dropdown-item" href="{{ route('dashboard') }}">Pengajuan Saya</a></li> 
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
                 <li>
                   <form method="POST" action="{{ route('logout') }}">
                     @csrf
